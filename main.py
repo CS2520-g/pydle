@@ -1,0 +1,33 @@
+from components.board import BoardFrame
+from components.mainmenu import MainMenuFrame
+from components.results import ResultsFrame
+from components.root import RootFrame
+from tkinter import Tk
+
+
+def main():
+    r = Tk()
+    r.title("pydle")
+    r.geometry("1024x768")
+    r.columnconfigure(0, weight=1)
+    r.rowconfigure(0, weight=1)
+    root = RootFrame(r)
+    resultsFrame = ResultsFrame(root)
+    boardFrame = BoardFrame(root)
+    mainMenuFrame = MainMenuFrame(root)
+
+    resultsFrame.setBoardFrame(boardFrame)
+    mainMenuFrame.setBoardFrame(boardFrame)
+    boardFrame.setResultFrame(resultsFrame)
+
+    resultsFrame.grid_remove()
+    boardFrame.grid_remove()
+    mainMenuFrame.grid(row=0, column=0)
+
+    r.mainloop()
+
+if __name__ == "__main__":
+    main()
+
+
+
