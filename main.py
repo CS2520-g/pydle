@@ -4,13 +4,27 @@ from components.results import ResultsFrame
 from components.root import RootFrame
 from tkinter import Tk
 
+def centerWindow(window, width, height):
+    screen_width = window.winfo_screenwidth()
+    screen_height = window.winfo_screenheight()
+    
+    centerX = (screen_width - width) // 2
+    centerY = (screen_height - height) // 2
+
+    window.geometry(f"{width}x{height}+{centerX}+{centerY}")
 
 def main():
     r = Tk()
     r.title("pydle")
-    r.geometry("1024x768")
+
+    width = 300
+    height = 256
+    r.geometry(f"{width}x{height}")
+    centerWindow(r, 500, 356)
+
     r.columnconfigure(0, weight=1)
     r.rowconfigure(0, weight=1)
+
     root = RootFrame(r)
     resultsFrame = ResultsFrame(root)
     boardFrame = BoardFrame(root)

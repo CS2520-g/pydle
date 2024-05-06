@@ -4,9 +4,10 @@ from tkinter import ttk
 from components.Result import Result
 from components.results import ResultsFrame
 from dictionary import match_encode, CharacterMatch
+
 class BoardFrame(ttk.Frame):
     def __init__(self, root: ttk.Frame):
-        super().__init__(root)
+        super().__init__(root, width=600, height=600)
         self.parent = root
         self.grid(sticky=NSEW)
         self.containerFrame = ttk.Frame(self)
@@ -14,15 +15,15 @@ class BoardFrame(ttk.Frame):
         self.maxAttempts = 5
         self.remainingAttempts = IntVar()
         self.remainingAttempts.set(self.maxAttempts)
-        self.remainingAttemptsLabel = ttk.Label(self, text=f"Remaining attempts: {self.remainingAttempts.get()}")
+        self.remainingAttemptsLabel = ttk.Label(self, text=f"Remaining attempts: {self.remainingAttempts.get()}", font=("Arial", 18))
         self.remainingAttemptsLabel.grid(row=0)
         self.cells = []
         self.currentAttempt = 0
         self.wordFeedbackVar = StringVar()
-        self.wordFeedbackLabel = ttk.Label(self, textvariable=self.wordFeedbackVar)
+        self.wordFeedbackLabel = ttk.Label(self, textvariable=self.wordFeedbackVar, font=("Arial", 18))
         # self.wordFeedbackLabel.grid(row=8)
         self.wordguess = StringVar()
-        self.wordEntryBox = ttk.Entry(self, textvariable=self.wordguess) 
+        self.wordEntryBox = ttk.Entry(self, textvariable=self.wordguess, font=("Arial", 18)) 
         self.wordEntryBox.bind("<Return>", lambda *args: self.__validate(self.wordguess.get()))
         # self.wordEntryBox.grid(row=10)
         # self.wordEntryBox.focus()
@@ -59,26 +60,30 @@ class BoardFrame(ttk.Frame):
         self.wordguess.set("")
         self.currentAttempt = 0
         self.remainingAttempts.set(self.maxAttempts)
-        self.remainingAttemptsLabel.configure(text=f"Remaining attempts: {self.remainingAttempts.get()}")
+        self.remainingAttemptsLabel.configure(text=f"Remaining attempts: {self.remainingAttempts.get()}", font=("Arial", 18))
         # self.wordEntryBox.focus()
     
     def __display_result(self, guess, match_res: list[CharacterMatch]):
         guess = guess.upper()
+        
         for (i, frame) in enumerate(self.cells[self.currentAttempt]):
-            l = ttk.Label(frame, text=guess[i])
+            letter = ttk.Label(frame, text=guess[i])
+            
             match match_res[i]:
                 case CharacterMatch.FULL_MATCH:
                     frame.configure(bg="green")
-                    l.configure(background="green")
+                    letter.configure(background="green")
                 case CharacterMatch.WRONG_PLACE:
                     frame.configure(bg="yellow")
-                    l.configure(background="yellow")
+                    letter.configure(background="yellow")
                 case CharacterMatch.NO_MATCH:
                     frame.configure(bg="black")
-                    l.configure(background="black")
+                    letter.configure(background="black")
+                    
             if match_res[i] == CharacterMatch.NO_MATCH:
-                l.configure(foreground="white")
-            l.grid(row=0)
+                letter.configure(foreground="white")
+            
+            letter.grid(row=0)
 
 
     def __validate(self, answer: str):
@@ -100,7 +105,7 @@ class BoardFrame(ttk.Frame):
             self.__display_result(answer, match_res)
             self.currentAttempt += 1
             self.remainingAttempts.set(self.remainingAttempts.get() - 1)
-            self.remainingAttemptsLabel.config(text=f"Remaining attempts: {self.remainingAttempts.get()}")
+            self.remainingAttemptsLabel.config(text=f"Remaining attempts: {self.remainingAttempts.get()}", font=("Arial", 18))
 
         if self.currentAttempt >= self.maxAttempts:
             self.__result_raise(Result.FAILURE)
