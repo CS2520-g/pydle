@@ -113,7 +113,12 @@ class BoardFrame(ttk.Frame):
     def __result_raise(self, res: Result):
             self.grid_remove()
             self.resultsFrame.setStatus(res, self.word)
+            self._window.geometry((f"{400}x{256}+{self._window.winfo_x()}+{self._window.winfo_y()}"))
+            self.resultsFrame.setWindow(self._window)
             self.resultsFrame.grid()
 
     def setResultFrame(self, frame: ResultsFrame):
         self.resultsFrame = frame
+
+    def setWindow(self, r: Tk):
+        self._window = r

@@ -35,5 +35,6 @@ class MainMenuFrame(ttk.Frame):
         word = random_word(length=self.optionLength.get())
         self.grid_remove()
         window.geometry(f"{600}x{500}+{window.winfo_x()}+{window.winfo_y()}")
+        self.boardFrame.setWindow(window)
         self.boardFrame.setupGame(word)
         self.boardFrame.grid()
