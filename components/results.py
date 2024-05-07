@@ -17,7 +17,7 @@ class ResultsFrame(ttk.Frame):
         buttonStyle = ttk.Style()
         buttonStyle.configure('restart.TButton', font=("Arial", 18))
         self.playButton = ttk.Button(self, command=self.setupGame, text="Start", style='restart.TButton')
-        self.playButton.grid(row=2, column=0, columnspan=2)
+        self.playButton.grid(row=2, column=0, columnspan=2, pady=5)
         self.optionLength = IntVar()
         self.optionLength.set(5)
         self.lengthLabel = ttk.Label(self, text="Length of word: ", font=("Arial", 18))
