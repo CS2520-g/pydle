@@ -87,6 +87,7 @@ class BoardFrame(ttk.Frame):
 
 
     def __validate(self, answer: str):
+        answer = answer.upper()
         if not isword(answer):
             self.wordFeedbackVar.set(f"Given work does not exist")
             return

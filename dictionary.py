@@ -59,4 +59,4 @@ def match_encode(chosen: str, guess: str) -> list[CharacterMatch]:
     return res
 
 def isword(word: str) -> bool:
-    return word in dictionary
+    return word in dictionary[len(word)]
