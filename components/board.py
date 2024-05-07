@@ -21,7 +21,7 @@ class BoardFrame(ttk.Frame):
         self.currentAttempt = 0
         self.wordFeedbackVar = StringVar()
         self.wordFeedbackLabel = ttk.Label(self, textvariable=self.wordFeedbackVar, font=("Arial", 18))
-        # self.wordFeedbackLabel.grid(row=8)
+        self.wordFeedbackLabel.grid(pady=5)
         self.wordguess = StringVar()
         self.wordEntryBox = ttk.Entry(self, textvariable=self.wordguess, font=("Arial", 18)) 
         self.wordEntryBox.bind("<Return>", lambda *args: self.__validate(self.wordguess.get()))
@@ -87,8 +87,11 @@ class BoardFrame(ttk.Frame):
 
 
     def __validate(self, answer: str):
-        if (len(answer) != self.wordLength):
-            self.wordFeedbackVar.set("Incorrect amount of characters")
+        if (len(answer) < self.wordLength):
+            self.wordFeedbackVar.set(f"Word needs to be {self.wordLength} long")
+            return
+        elif (len(answer) > self.wordLength):
+            self.wordFeedbackVar.set("Too many characters")
             return
         match_res = match_encode(self.word, answer)
         full_match = False
@@ -104,8 +107,11 @@ class BoardFrame(ttk.Frame):
         else:
             self.__display_result(answer, match_res)
             self.currentAttempt += 1
+            self.wordEntryBox.delete(0, self.wordLength)
             self.remainingAttempts.set(self.remainingAttempts.get() - 1)
             self.remainingAttemptsLabel.config(text=f"Remaining attempts: {self.remainingAttempts.get()}", font=("Arial", 18))
+        
+        self.wordFeedbackVar.set("")
 
         if self.currentAttempt >= self.maxAttempts:
             self.__result_raise(Result.FAILURE)
