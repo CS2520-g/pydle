@@ -3,7 +3,7 @@ from tkinter import ttk
 
 from components.Result import Result
 from components.results import ResultsFrame
-from dictionary import match_encode, CharacterMatch
+from dictionary import isword, match_encode, CharacterMatch
 
 class BoardFrame(ttk.Frame):
     def __init__(self, root: ttk.Frame):
@@ -87,6 +87,9 @@ class BoardFrame(ttk.Frame):
 
 
     def __validate(self, answer: str):
+        if not isword(answer):
+            self.wordFeedbackVar.set(f"Given work does not exist")
+            return
         if (len(answer) < self.wordLength):
             self.wordFeedbackVar.set(f"Word needs to be {self.wordLength} long")
             return
