@@ -19,7 +19,6 @@ def main():
 
     width = 300
     height = 256
-    r.geometry(f"{width}x{height}")
     centerWindow(r, 500, 356)
 
     r.columnconfigure(0, weight=1)
@@ -29,6 +28,8 @@ def main():
     resultsFrame = ResultsFrame(root)
     boardFrame = BoardFrame(root)
     mainMenuFrame = MainMenuFrame(root)
+
+    mainMenuFrame.playButton.config(command=lambda: mainMenuFrame.setupGame(r))
 
     resultsFrame.setBoardFrame(boardFrame)
     mainMenuFrame.setBoardFrame(boardFrame)
@@ -42,6 +43,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-

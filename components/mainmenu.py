@@ -14,7 +14,7 @@ class MainMenuFrame(ttk.Frame):
 
         self.welcomeLabel = ttk.Label(self, text="Welcome to Pydle!", font=("Arial", 24))
         self.welcomeLabel.grid(row=0, columnspan=2, pady=10)
-        self.playButton = ttk.Button(self, command=self.setupGame, text="Start", style='start.TButton')
+        self.playButton = ttk.Button(self, text="Start", style='start.TButton')
         self.playButton.grid(row=3, columnspan=2, pady=10)
         self.playButton.bind("<Return>", lambda: self.setupGame)
         basicTextStyle.configure('start.TButton', font=("Arial", 18))
@@ -31,8 +31,9 @@ class MainMenuFrame(ttk.Frame):
     def setBoardFrame(self, boardFrame):
         self.boardFrame = boardFrame
 
-    def setupGame(self, *args):
+    def setupGame(self, window: Tk):
         word = random_word(length=self.optionLength.get())
         self.grid_remove()
+        window.geometry(f"{600}x{500}+{window.winfo_x()}+{window.winfo_y()}")
         self.boardFrame.setupGame(word)
         self.boardFrame.grid()

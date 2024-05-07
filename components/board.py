@@ -7,7 +7,7 @@ from dictionary import match_encode, CharacterMatch
 
 class BoardFrame(ttk.Frame):
     def __init__(self, root: ttk.Frame):
-        super().__init__(root, width=600, height=600)
+        super().__init__(root)
         self.parent = root
         self.grid(sticky=NSEW)
         self.containerFrame = ttk.Frame(self)
@@ -88,7 +88,7 @@ class BoardFrame(ttk.Frame):
 
     def __validate(self, answer: str):
         if (len(answer) != self.wordLength):
-            self.wordFeedbackVar.set("Not enough characters")
+            self.wordFeedbackVar.set("Incorrect amount of characters")
             return
         match_res = match_encode(self.word, answer)
         full_match = False
